@@ -9,6 +9,8 @@ from matplotlib.cm import ScalarMappable
 import cartopy.crs as ccrs
 
 
+
+
 json = requests.get("https://api.geonet.org.nz/network/sensor?sensorType=3,8,9&endDate=9999-01-01").json()
 
 loc, code, end = [], [], []
@@ -24,7 +26,6 @@ df = df.drop_duplicates("code")
 df = df.drop(df[df.code.isin(["HD60", "HD61", "HD62", "HD63", "HD64", "HD65", "CRSZ"])].index)
 
 df["loc"] = tuple(df["loc"])
-df["points"] = Point(df["loc"])
 
 
 list_loc = df["loc"].tolist()
