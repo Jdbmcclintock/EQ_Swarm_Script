@@ -7,7 +7,7 @@ import pandas as pd
 from pyproj import Proj, transform, Transformer
 from matplotlib import colors
 
-df = pd.read_csv("earthquakes_2000.csv")
+df = pd.read_csv("earthquakes.csv")
 df["moment"] = 10 ** (1.5 * df["magnitude"] + 16.1) / 10 ** 7
 
 func = Transformer.from_crs("EPSG:4236", "EPSG:2193")
@@ -55,7 +55,7 @@ def heat_fig(df, title, color, vmax, vmin, s = 6, cmap = None, marker = 's', alp
             alpha = alpha)
     fig.tight_layout()
     if cmap != None:
-        cbar = fig.colorbar(scat, fraction=0.046, pad=0.02)
+        cbar = fig.colorbar(scat, fraction=0.046, pad=0.01)
         cbar.ax.tick_params(labelsize=15)
     return fig
 
@@ -104,7 +104,7 @@ fig2 = heat_fig(avmag_fix, "Heatmap of mean magnitude since 2000", avmag_fix["me
 plt.savefig("meanmag2000.png")
 
 fig2 = heat_fig(quant, "Heatmap of 10th percentile EQs", quant["q1"], 6, 0, cmap = "magma_r")
-plt.savefig("quant.png")
+plt.savefig("quant.png", bbox_inches = "tight")
 
 
 """

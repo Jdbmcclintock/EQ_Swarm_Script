@@ -9,7 +9,7 @@ def locinfo(quakeid):
     return (main_lat, main_lon)
 
 
-def quakedata(quakeid, days, minimum_magnitude, radius=10):
+def quakedata(quakeid, days, minimum_magnitude, radius=100):
     """
     Pull aftershock informaton for a defined period of time after the mainshock and produce plots of it
     for analysis.
@@ -28,7 +28,7 @@ def quakedata(quakeid, days, minimum_magnitude, radius=10):
     sequence_json = requests.get("http://wfs.geonet.org.nz/geonet/ows?service=WFS&version=1.0.0&request=" +
                                  "GetFeature&typeName=geonet:quake_search_v1&outputFormat=json&cql_filter=" +
                                  "origintime>=" + start_time + "+AND+origintime<=" + end_time +
-                                 "+AND+depth<40+AND+magnitude>=" + str(minimum_magnitude) +
+                                 "+AND+depth<400+AND+magnitude>=" + str(minimum_magnitude) +
                                  "+AND+DWITHIN(origin_geom,Point+(" + location + ")," + str(
         radius) + "000,meters)").json()
 

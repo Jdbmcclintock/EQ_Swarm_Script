@@ -50,32 +50,33 @@ def coord_splitter(minlon, maxlon, minlat, maxlat):
 
 def two_maps(coords_east, coords_west, extent):
     osm_img = cimgt.OSM()
-    fig = plt.figure(figsize=(14, 10))
+    fig = plt.figure(figsize=(20, 26), dpi = 200)
     width_e = coords_east[1] - coords_east[0]
     width_w = coords_west[0] - coords_west[1]
     gs1 = gridspec.GridSpec(1, 2, width_ratios=[width_e, width_w])
     gs1.update(wspace=0, hspace=0)
-    axes = [plt.subplot(gs1[0], projection=osm_img.crs), plt.subplot(gs1[1], projection=osm_img.crs)]
+    axes = [plt.subplot(gs1[0], projection=ccrs.PlateCarree()), plt.subplot(gs1[1], projection=ccrs.PlateCarree())]
     axes[0].set_extent(coords_east)
     axes[1].set_extent(coords_west)
     for ax in axes:
-        ax.add_image(osm_img, 9)
+        ax.add_image(osm_img, 6, interpolation = 'spline36')
         ax.spines["geo"].set_linewidth(0)
     fig.subplots_adjust(left=0.05, right=0.95, bottom=0.05, top=0.95)
     plt.savefig("internal.png", pad_inches=0.1, bbox_inches='tight')
-    fig.clf()
+"""    fig.clf()
     image = plt.imread("internal.png")
     ax = plt.axes(projection=ccrs.Orthographic(central_longitude=175, central_latitude=-40))
     ax.imshow(image, extent=extent, aspect=1.5,
               transform=ccrs.Orthographic(central_longitude=175, central_latitude=-40))
-    return fig
+    plt.tight_layout()
+    return fig"""
 
 """def df_split(df):
     negative_lon_df = df[df["lon"] < 0]
     positive_lon_df = df[df["lon"] > 0]
     return positive_lon_df, negative_lon_df,"""
 
-def plot_eqs_twomap(df):
+"""def plot_eqs_twomap(df):
     for ind, val in enumerate(df["lon"]):
         if val < 0:
             df["lon"][ind] = val + 360
@@ -99,6 +100,9 @@ def plot_eqs_twomap(df):
              alpha=0.6)
 
     return plt.show()
+"""
+e, w = coord_splitter(163, 185, -50, -32)
 
-plot_eqs_twomap(quake_df)
+fig = two_maps(e, w, [163, 185, -50, -32])
 
+#fig.savefig("banana.png", bbox_inches = 'tight', pad_inches = 0)

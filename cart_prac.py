@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import cartopy.crs as ccrs
 import cartopy.io.img_tiles as cimgt
 
-quakes = quakedata("2021p061879", 3, 0, radius=10)
+quakes = quakedata("2021p169083", 30, 0, radius=100)
 quake_df = json_extraction(quakes)
 
 def plot_scatter_map(quake_df, title, colormap_style = 'magma'):
@@ -54,3 +54,5 @@ def plot_scatter_map(quake_df, title, colormap_style = 'magma'):
     fig.subplots_adjust(left=0.05, right = 0.95, bottom = 0.05, top = 0.95)
     # worth making name of file configurable? Removes even more whitespace.
     plt.savefig("Swarm_Map.png", pad_inches = 0.1, bbox_inches = 'tight')
+
+plot_scatter_map(quake_df, "east_cape")
