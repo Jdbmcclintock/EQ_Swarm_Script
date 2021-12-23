@@ -1,5 +1,5 @@
 import pandas as pd
-from pyproj import Proj, transform, Transformer
+from pyproj import Transformer
 import numpy as np
 import cartopy.crs as ccrs
 import cartopy.feature as feature
@@ -40,7 +40,7 @@ for a in list_north:
     full.append([(a, i) for i in list_east])
 
 flat_list = [item for sublist in full for item in sublist]
-
+#banantime
 blank_df = pd.DataFrame(flat_list, columns=["n", "e"])
 blank_df["tuples"] = [(i[0], i[1]) for i in flat_list]
 grouped = df.groupby("tuples", as_index = False).count()
@@ -71,7 +71,7 @@ import matplotlib.pyplot as plt
 levels_array = list(range(0, 510, 10))
 levels = 25
 vmin = 0
-vmax = 100
+vmax = 1000
 
 
 level_boundaries = np.linspace(vmin, vmax, levels + 1)
